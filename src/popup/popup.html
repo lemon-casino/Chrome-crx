@@ -114,15 +114,17 @@
                   默认勾选项可在通用选项中配置。
                 </p>
               </fieldset>
-              <label class="current-tab__reload">
-                <input type="checkbox" data-current-reload />
-                <span>清除数据后重新加载页面</span>
-              </label>
-              <div class="current-tab__actions">
-                <button type="submit" class="current-tab__submit">立即清理</button>
-                <button type="button" class="current-tab__secondary" data-apply-defaults>
-                  恢复默认
-                </button>
+              <div class="current-tab__footer">
+                <div class="current-tab__actions">
+                  <button type="submit" class="current-tab__submit">立即清理</button>
+                  <button type="button" class="current-tab__secondary" data-apply-defaults>
+                    恢复默认
+                  </button>
+                </div>
+                <label class="current-tab__reload">
+                  <input type="checkbox" data-current-reload />
+                  <span>清除数据后重新加载页面</span>
+                </label>
               </div>
               <p class="current-tab__status" role="status" aria-live="polite" data-current-status></p>
             </form>

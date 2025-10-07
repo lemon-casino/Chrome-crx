@@ -525,6 +525,8 @@ body {
   border-radius: 12px;
   border: 1px solid var(--color-border);
   background: rgba(15, 23, 42, 0.55);
+  min-height: 64px;
+  max-height: 64px;
 }
 
 .current-tab__favicon {
@@ -537,18 +539,24 @@ body {
 .current-tab__details {
   display: grid;
   gap: 2px;
+  min-width: 0;
 }
 
 .current-tab__title {
   margin: 0;
   font-size: 0.9rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .current-tab__url {
   margin: 0;
   font-size: 0.75rem;
   color: var(--color-text-muted);
-  word-break: break-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .current-tab__form {
@@ -586,6 +594,7 @@ body {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 6px;
+  grid-auto-rows: 1fr;
 }
 
 .current-tab__checkbox {
@@ -618,7 +627,7 @@ body {
   font-size: 0.8rem;
   color: var(--color-text);
   cursor: pointer;
-  width: 100%;
+  flex: 0 0 auto;
 }
 
 .current-tab__reload input {
@@ -643,6 +652,22 @@ body {
   margin: 0;
   font-size: 0.75rem;
   color: var(--color-text-muted);
+}
+
+.current-tab__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+.current-tab__footer .current-tab__actions {
+  flex: 1 1 auto;
+}
+
+.current-tab__footer .current-tab__reload {
+  margin-left: auto;
 }
 
 .current-tab__actions {
@@ -1098,6 +1123,8 @@ body {
   border-radius: 12px;
   border: 1px solid var(--color-border);
   background: rgba(15, 23, 42, 0.55);
+  min-height: 64px;
+  max-height: 64px;
 }
 
 .current-tab__favicon {
@@ -1108,18 +1135,24 @@ body {
 .current-tab__details {
   display: grid;
   gap: 4px;
+  min-width: 0;
 }
 
 .current-tab__title {
   margin: 0;
   font-size: 0.95rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .current-tab__url {
   margin: 0;
   font-size: 0.75rem;
   color: var(--color-text-muted);
-  word-break: break-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .current-tab__form {
@@ -1155,8 +1188,9 @@ body {
 
 .current-tab__types {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
+  grid-auto-rows: 1fr;
 }
 
 .current-tab__checkbox {
@@ -1169,6 +1203,20 @@ body {
   background: rgba(15, 23, 42, 0.4);
   font-size: 0.8rem;
   color: var(--color-text);
+}
+
+.current-tab__reload {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 9px;
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  background: rgba(15, 23, 42, 0.4);
+  font-size: 0.8rem;
+  color: var(--color-text);
+  cursor: pointer;
+  flex: 0 0 auto;
 }
 
 .current-tab__checkbox input {
@@ -1186,6 +1234,22 @@ body {
 .current-tab__actions {
   display: flex;
   gap: 6px;
+}
+
+.current-tab__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+.current-tab__footer .current-tab__actions {
+  flex: 1 1 auto;
+}
+
+.current-tab__footer .current-tab__reload {
+  margin-left: auto;
 }
 
 .current-tab__submit {
@@ -1279,6 +1343,8 @@ body {
 
   .current-tab__summary {
     background: rgba(248, 250, 252, 0.9);
+    min-height: 64px;
+    max-height: 64px;
   }
 
   .current-tab__form select {
@@ -1287,6 +1353,10 @@ body {
   }
 
   .current-tab__checkbox {
+    background: rgba(248, 250, 252, 0.8);
+  }
+
+  .current-tab__reload {
     background: rgba(248, 250, 252, 0.8);
   }
 
