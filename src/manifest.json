@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "Tab Clean Master",
+  "description": "一个用于清理当前页面和全部浏览数据的Chrome扩展，提供灵活的选项和友好的界面。",
+  "version": "0.1.0",
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Tab Clean Master"
+  },
+  "background": {
+    "service_worker": "background/icon-service-worker.js"
+  },
+  "options_page": "options/options.html",
+  "permissions": [
+    "storage",
+    "tabs",
+    "browsingData"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ]
+}
