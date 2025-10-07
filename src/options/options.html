@@ -108,6 +108,32 @@
                 当打开的标签页数量超过该值时，将提示执行一次默认清理。
               </p>
             </div>
+            <fieldset
+              class="automation__events"
+              role="radiogroup"
+              aria-labelledby="automation-events-title"
+            >
+              <legend class="automation__legend" id="automation-events-title">
+                浏览器事件自动清理
+              </legend>
+              <p class="automation__hint">
+                在打开或关闭浏览器时自动执行一次默认清理。默认保持关闭。
+              </p>
+              <div class="automation__event-options">
+                <label class="chip chip--dense">
+                  <input type="radio" name="browserEvent" value="off" />
+                  <span>关闭</span>
+                </label>
+                <label class="chip chip--dense">
+                  <input type="radio" name="browserEvent" value="startup" />
+                  <span>打开浏览器时</span>
+                </label>
+                <label class="chip chip--dense">
+                  <input type="radio" name="browserEvent" value="shutdown" />
+                  <span>关闭浏览器前</span>
+                </label>
+              </div>
+            </fieldset>
           </div>
         </section>
         <div class="options__actions">

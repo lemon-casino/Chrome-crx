@@ -61,8 +61,13 @@ function readSettingsFromForm() {
     threshold: automationThresholdInput
       ? Number.parseInt(automationThresholdInput.value, 10)
       : currentSettings.automation.threshold,
+    browserEvent: currentSettings.automation.browserEvent,
   };
 
+  const browserEventInput = formData.get("browserEvent");
+  if (typeof browserEventInput === "string") {
+    automation.browserEvent = browserEventInput;
+  }
   return normalizeGeneralSettings({ timeRange, dataTypes, automation });
 }
 
@@ -94,6 +99,12 @@ function applySettingsToForm(settings) {
   if (automationThresholdInput) {
     automationThresholdInput.value = String(settings.automation.threshold);
   }
+  const browserEventInputs = form.querySelectorAll('input[name="browserEvent"]');
+  browserEventInputs.forEach((input) => {
+    input.checked =
+      input.value ===
+      (settings.automation.browserEvent || BROWSER_EVENT_AUTOMATION[0]);
+  });
 }
 
 async function persistSettings(settings) {
@@ -106,7 +117,6 @@ async function persistSettings(settings) {
         detail: settings,
       })
     );
-
   } catch (error) {
     console.error("[Tab Clean Master] 保存设置失败", error);
     showStatus("保存设置时出现问题，请稍后重试", "error");

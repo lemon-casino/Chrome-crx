@@ -113,6 +113,9 @@ body {
   transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
 }
 
+.chip--dense {
+  padding: 10px 14px;
+}
 .chip:hover,
 .toggle:hover,
 .chip:focus-within,
@@ -197,6 +200,26 @@ body {
   background: rgba(15, 23, 42, 0.45);
   color: var(--color-text);
   font-weight: 600;
+}
+
+.automation__events {
+  margin: 0;
+  padding: 0;
+  border: none;
+  display: grid;
+  gap: 12px;
+}
+
+.automation__legend {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.automation__event-options {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 
 .automation__threshold input:focus {
