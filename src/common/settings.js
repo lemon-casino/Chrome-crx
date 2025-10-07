@@ -21,7 +21,6 @@ export const DATA_TYPE_OPTIONS = [
   { id: "downloads", label: "下载记录", key: "downloads", supportsOrigins: false },
   { id: "passwords", label: "已保存的密码", key: "passwords", supportsOrigins: false },
 ];
-
 export const BROWSER_EVENT_AUTOMATION = [
   "off",
   "startup",
@@ -41,7 +40,6 @@ export const DEFAULT_GENERAL_SETTINGS = {
   automation: {
     enabled: false,
     threshold: 20,
-    browserEvent: BROWSER_EVENT_AUTOMATION[0],
   },
 };
 
@@ -49,7 +47,6 @@ export const DEFAULT_PANEL_SELECTION = {
   timeRange: DEFAULT_GENERAL_SETTINGS.timeRange,
   dataTypes: { ...DEFAULT_GENERAL_SETTINGS.dataTypes },
 };
-
 export const AUTOMATION_THRESHOLD = {
   min: 5,
   max: 50,

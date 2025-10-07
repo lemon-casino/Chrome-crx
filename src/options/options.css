@@ -116,7 +116,6 @@ body {
 .chip--dense {
   padding: 10px 14px;
 }
-
 .chip:hover,
 .toggle:hover,
 .chip:focus-within,
