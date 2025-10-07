@@ -1,0 +1,113 @@
+:root {
+  color-scheme: light dark;
+  --layout-max-width: 880px;
+  --color-bg: #0b1120;
+  --color-card: rgba(15, 23, 42, 0.72);
+  --color-border: rgba(148, 163, 184, 0.18);
+  --color-text: #e2e8f0;
+  --color-text-muted: rgba(148, 163, 184, 0.75);
+  --color-accent: #38bdf8;
+  --color-placeholder: rgba(148, 163, 184, 0.28);
+  font-size: 16px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: radial-gradient(circle at top, #1d4ed8 0%, #0b1120 50%, #020617 100%);
+  color: var(--color-text);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 48px 16px;
+}
+
+.options {
+  width: min(100%, var(--layout-max-width));
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.options__header {
+  padding: 32px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.3), rgba(14, 165, 233, 0.12));
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 25px 45px -25px rgba(14, 165, 233, 0.6);
+}
+
+.options__header h1 {
+  margin: 0 0 12px;
+  font-size: 2rem;
+}
+
+.options__header p {
+  margin: 0;
+  line-height: 1.6;
+  color: var(--color-text);
+}
+
+.options__section {
+  background: var(--color-card);
+  border-radius: 20px;
+  padding: 24px;
+  border: 1px solid var(--color-border);
+  display: grid;
+  gap: 16px;
+}
+
+.section__heading h2 {
+  margin: 0 0 8px;
+  font-size: 1.35rem;
+}
+
+.section__heading p {
+  margin: 0;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.section__placeholder {
+  min-height: 120px;
+  border: 2px dashed var(--color-placeholder);
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-placeholder);
+}
+
+.options__footer {
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  padding-bottom: 16px;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --color-bg: #f8fafc;
+    --color-card: rgba(255, 255, 255, 0.88);
+    --color-border: rgba(148, 163, 184, 0.22);
+    --color-text: #0f172a;
+    --color-text-muted: rgba(15, 23, 42, 0.55);
+    --color-placeholder: rgba(148, 163, 184, 0.55);
+  }
+
+  body {
+    background: linear-gradient(160deg, #e0f2fe 0%, #f8fafc 60%, #cbd5f5 100%);
+  }
+
+  .options__header {
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.25), rgba(14, 165, 233, 0.08));
+    color: var(--color-text);
+  }
+}

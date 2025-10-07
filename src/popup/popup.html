@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tab Clean Master</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main class="popup" aria-label="Tab Clean Master 主界面">
+      <header class="popup__header">
+        <h1 class="popup__title">Tab Clean Master</h1>
+        <p class="popup__subtitle">快速清理浏览数据，保持工作流畅。</p>
+      </header>
+      <nav class="tabs" role="tablist" aria-label="清理功能选项卡">
+        <button
+          class="tabs__tab tabs__tab--active"
+          role="tab"
+          aria-selected="true"
+          aria-controls="tab-current"
+          id="tab-current-btn"
+          data-target="tab-current"
+        >
+          当前页面
+        </button>
+        <button
+          class="tabs__tab"
+          role="tab"
+          aria-selected="false"
+          aria-controls="tab-global"
+          id="tab-global-btn"
+          data-target="tab-global"
+        >
+          全部清理
+        </button>
+        <button
+          class="tabs__tab"
+          role="tab"
+          aria-selected="false"
+          aria-controls="tab-settings"
+          id="tab-settings-btn"
+          data-target="tab-settings"
+        >
+          通用选项
+        </button>
+      </nav>
+      <section class="panels">
+        <article
+          class="panel panel--active"
+          id="tab-current"
+          role="tabpanel"
+          aria-labelledby="tab-current-btn"
+        >
+          <h2 class="panel__title">当前页面清理</h2>
+          <p class="panel__description">
+            查看当前标签页的信息，并快速执行针对性的清理操作。后续阶段将补充清理选项和实时反馈。
+          </p>
+          <div class="panel__placeholder" aria-hidden="true">
+            <span>功能开发中...</span>
+          </div>
+        </article>
+        <article
+          class="panel"
+          id="tab-global"
+          role="tabpanel"
+          aria-labelledby="tab-global-btn"
+          hidden
+        >
+          <h2 class="panel__title">全部数据清理</h2>
+          <p class="panel__description">
+            对整个浏览器的数据进行清理，支持批量操作和进度反馈。将在后续阶段提供完整体验。
+          </p>
+          <div class="panel__placeholder" aria-hidden="true">
+            <span>功能开发中...</span>
+          </div>
+        </article>
+        <article
+          class="panel"
+          id="tab-settings"
+          role="tabpanel"
+          aria-labelledby="tab-settings-btn"
+          hidden
+        >
+          <h2 class="panel__title">通用选项</h2>
+          <p class="panel__description">
+            管理时间范围、自动清理和扩展行为等通用配置。该部分将在相关阶段完成。
+          </p>
+          <div class="panel__placeholder" aria-hidden="true">
+            <span>功能开发中...</span>
+          </div>
+        </article>
+      </section>
+      <footer class="popup__footer">
+        <small>版本 0.1.0 · 架构搭建阶段</small>
+      </footer>
+    </main>
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>
