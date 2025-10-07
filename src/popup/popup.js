@@ -13,6 +13,7 @@ import {
   derivePanelSelectionFromGeneral,
   normalizePanelSelection,
   AUTOMATION_THRESHOLD,
+  BROWSER_EVENT_AUTOMATION,
 } from "../common/settings.js";
 import { hasChromeRuntime } from "../common/utils.js";
 
@@ -357,6 +358,8 @@ async function initCurrentTabPanel() {
   observeGeneralSettings((nextGeneral) => {
     generalSettings = nextGeneral;
     generalDefaults = derivePanelSelectionFromGeneral(generalSettings);
+    panelSelection = normalizePanelSelection(panelSelection, generalDefaults);
+    applySettings(panelSelection);
   });
 }
 
@@ -545,6 +548,8 @@ async function initGlobalPanel() {
   observeGeneralSettings((nextGeneral) => {
     generalSettings = nextGeneral;
     generalDefaults = derivePanelSelectionFromGeneral(generalSettings);
+    panelSelection = normalizePanelSelection(panelSelection, generalDefaults);
+    applySettings(panelSelection);
   });
 }
 
@@ -621,6 +626,9 @@ async function initPopupSettingsPanel() {
       threshold: thresholdInput
         ? Number.parseInt(thresholdInput.value, 10)
         : currentSettings.automation.threshold,
+      browserEvent:
+        currentSettings.automation.browserEvent ??
+        BROWSER_EVENT_AUTOMATION[0],
     };
 
     return normalizeGeneralSettings({
