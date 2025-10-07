@@ -520,8 +520,8 @@ body {
 .current-tab__summary {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 9px 11px;
+  gap: 8px;
+  padding: 6px 9px;
   border-radius: 12px;
   border: 1px solid var(--color-border);
   background: rgba(15, 23, 42, 0.55);
@@ -530,16 +530,18 @@ body {
 .current-tab__favicon {
   border-radius: 8px;
   background: rgba(148, 163, 184, 0.15);
+  width: 28px;
+  height: 28px;
 }
 
 .current-tab__details {
   display: grid;
-  gap: 4px;
+  gap: 2px;
 }
 
 .current-tab__title {
   margin: 0;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 }
 
 .current-tab__url {
@@ -551,7 +553,7 @@ body {
 
 .current-tab__form {
   display: grid;
-  gap: 12px;
+  gap: 10px;
 }
 
 .current-tab__group {
@@ -582,8 +584,8 @@ body {
 
 .current-tab__types {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
 }
 
 .current-tab__checkbox {
@@ -596,6 +598,39 @@ body {
   background: rgba(15, 23, 42, 0.4);
   font-size: 0.8rem;
   color: var(--color-text);
+  width: 100%;
+}
+
+.current-tab__checkbox:hover,
+.current-tab__checkbox:focus-within {
+  border-color: var(--color-accent);
+  background: rgba(56, 189, 248, 0.12);
+}
+
+.current-tab__reload {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 9px;
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  background: rgba(15, 23, 42, 0.4);
+  font-size: 0.8rem;
+  color: var(--color-text);
+  cursor: pointer;
+  width: 100%;
+}
+
+.current-tab__reload input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-accent);
+}
+
+.current-tab__reload:hover,
+.current-tab__reload:focus-within {
+  border-color: var(--color-accent);
+  background: rgba(56, 189, 248, 0.12);
 }
 
 .current-tab__checkbox input {
