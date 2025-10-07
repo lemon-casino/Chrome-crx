@@ -137,6 +137,170 @@ body {
   text-transform: uppercase;
 }
 
+.current-tab {
+  display: grid;
+  gap: 12px;
+}
+
+.current-tab__summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  background: rgba(15, 23, 42, 0.55);
+}
+
+.current-tab__favicon {
+  border-radius: 8px;
+  background: rgba(148, 163, 184, 0.15);
+}
+
+.current-tab__details {
+  display: grid;
+  gap: 4px;
+}
+
+.current-tab__title {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.current-tab__url {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  word-break: break-all;
+}
+
+.current-tab__form {
+  display: grid;
+  gap: 14px;
+}
+
+.current-tab__group {
+  display: grid;
+  gap: 8px;
+}
+
+.current-tab__label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.current-tab__form select {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  background: rgba(15, 23, 42, 0.55);
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.current-tab__form select:focus {
+  outline: 2px solid rgba(56, 189, 248, 0.4);
+  outline-offset: 2px;
+}
+
+.current-tab__types {
+  display: grid;
+  gap: 8px;
+}
+
+.current-tab__checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  background: rgba(15, 23, 42, 0.4);
+  font-size: 0.8rem;
+  color: var(--color-text);
+}
+
+.current-tab__checkbox input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--color-accent);
+}
+
+.current-tab__hint {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.current-tab__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.current-tab__submit {
+  flex: 1;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  color: #0f172a;
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-strong));
+  box-shadow: 0 12px 24px -14px rgba(56, 189, 248, 0.75);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.current-tab__submit:hover,
+.current-tab__submit:focus-visible {
+  outline: none;
+  transform: translateY(-1px);
+  box-shadow: 0 16px 32px -14px rgba(56, 189, 248, 0.85);
+}
+
+.current-tab__secondary {
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-weight: 600;
+  background: rgba(15, 23, 42, 0.35);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.current-tab__secondary:hover,
+.current-tab__secondary:focus-visible {
+  outline: none;
+  border-color: var(--color-accent);
+  background: rgba(56, 189, 248, 0.15);
+}
+
+.current-tab__status {
+  margin: 0;
+  min-height: 1.2em;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.current-tab__status[data-tone="info"] {
+  color: var(--color-text-muted);
+}
+
+.current-tab__status[data-tone="success"] {
+  color: #bbf7d0;
+}
+
+.current-tab__status[data-tone="error"] {
+  color: #fca5a5;
+}
+
+.current-tab__status[data-tone="warning"] {
+  color: #fde68a;
+}
+
 .popup__footer {
   text-align: center;
   font-size: 0.75rem;
@@ -162,5 +326,22 @@ body {
   .panel {
     background: rgba(255, 255, 255, 0.85);
     box-shadow: 0 10px 30px -20px rgba(15, 23, 42, 0.25);
+  }
+
+  .current-tab__summary {
+    background: rgba(248, 250, 252, 0.9);
+  }
+
+  .current-tab__form select {
+    background: rgba(248, 250, 252, 0.95);
+    color: inherit;
+  }
+
+  .current-tab__checkbox {
+    background: rgba(248, 250, 252, 0.8);
+  }
+
+  .current-tab__secondary {
+    background: rgba(248, 250, 252, 0.85);
   }
 }
