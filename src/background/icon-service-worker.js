@@ -8,9 +8,9 @@ import {
 } from "../common/settings.js";
 
 const ICON_PATHS = {
-  16: "assets/icons/icon16.png",
-  32: "assets/icons/icon32.png",
-  48: "assets/icons/icon48.png",
+  16: "assets/icons/Chrome.png",
+  32: "assets/icons/Chrome.png",
+  48: "assets/icons/Chrome.png",
 };
 
 async function loadIconImageData(size, path) {

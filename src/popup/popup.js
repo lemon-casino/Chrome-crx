@@ -204,14 +204,14 @@ async function initCurrentTabPanel() {
     if (!tab) {
       titleElement.textContent = "无法获取当前标签页";
       urlElement.textContent = "请确认扩展拥有标签页权限";
-      faviconElement.src = "../assets/icons/icon32.png";
+      faviconElement.src = "../assets/icons/Chrome.png";
       faviconElement.alt = "Tab Clean Master";
       return;
     }
 
     titleElement.textContent = tab.title || "未命名标签页";
     urlElement.textContent = tab.url || "";
-    faviconElement.src = tab.favIconUrl || "../assets/icons/icon32.png";
+    faviconElement.src = tab.favIconUrl || "../assets/icons/Chrome.png";
     faviconElement.alt = tab.title || "当前站点";
   }
 
