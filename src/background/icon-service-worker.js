@@ -1,48 +1,52 @@
-const ICON_BASE64 = {
-  16: "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMElEQVR42mPgF9f6TwlmGMYG8C19iYGJNgCbZlyGMJCiGZshowbQIhaokg6GVl4AAOnoqIwX5vcOAAAAAElFTkSuQmCC",
-  32: "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAV0lEQVR42u3WMREAIAxD0SiAEQ/4RhwqQAJlyFHu/pA5b2qq2vp6GQEAAOA7QBnzGBsgUn6LkKP8BiFXeRQhZ3kEAQAAAAD5L2GKLUixhin+AV4yAAAc2anAf0e8GK1oAAAAAElFTkSuQmCC",
-  48: "iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAh0lEQVR42u3Yuw2AQAwE0a0AQnqgb4qjCqgAJO6D7dUEzudFd7bWbb8qjwAAAAAAAAAAboDlOB8nLeAteiZGUfGjEIqMH4FQdHwvQhniexDKEt+KUKb4FgSAUoA/4r8iAAAAAKAQgIcMAL9Rk33AYiOz2IktrhIWdyGLyxzHXQAAAAAAAKBhbufyqb95VLSgAAAAAElFTkSuQmCC",
-  128: "iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAABgUlEQVR42u3dy3ECMQBEwYkAH8mBvAnOUUAOLhcfvT68BDR93JX2c7091G0OAQAHAYAAEAACQAAIAAEgAASAABAAAkAACAABIAAEgAAQAAJAAAgAASAABIAAEACf1uX+++cAiA1eAzHDtyHM6G0MM34bwQzfhjDDtyHM+G0EM34bwYzfRjDjtxHM+G0EM34bwYzfRjDjtxEAAIDxywgAAMD4ZQQzfhsBAAAAAIDxswgAAMD4ZQQAAAAAAAAAYPwmAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACHwPAAAAAAAAAAAQ+C8AAAAg8G8gAAAAAAAEbgiBwB1BAAAAgXsCAQAAAncFQ+C2cAi8FwCBF0Mg8GaQV8MA8G4gAF4OBcDbwQB4PRyAAxF88/l9PYB3YTjlzI4C8AoIp53VkQD+E8TpZ5MAIAAEgAAQAAJAAAgASAAAHAIADgIAASAABAAAkAACAABIAAEgAAQAAJAAAgAAaCDegKkUCoFg1+/xQAAAABJRU5ErkJggg=="
+const ICON_PATHS = {
+  16: "assets/icons/icon16.png",
+  32: "assets/icons/icon32.png",
+  48: "assets/icons/icon48.png",
 };
 
-function base64ToUint8Array(base64) {
-  const binary = atob(base64);
-  const buffer = new Uint8Array(binary.length);
-  for (let i = 0; i < binary.length; i += 1) {
-    buffer[i] = binary.charCodeAt(i);
+async function loadIconImageData(size, path) {
+  const response = await fetch(chrome.runtime.getURL(path));
+  if (!response.ok) {
+    throw new Error(`Failed to load icon: ${path} (${response.status})`);
   }
-  return buffer;
-}
 
-async function base64ToImageData(size, base64) {
-  const blob = new Blob([base64ToUint8Array(base64)], { type: "image/png" });
+  const blob = await response.blob();
   const bitmap = await createImageBitmap(blob);
-  const canvas = new OffscreenCanvas(size, size);
-  const ctx = canvas.getContext("2d");
-  ctx.drawImage(bitmap, 0, 0, size, size);
-  const imageData = ctx.getImageData(0, 0, size, size);
-  bitmap.close();
-  return imageData;
+
+  try {
+    const canvas = new OffscreenCanvas(size, size);
+    const context = canvas.getContext("2d");
+
+    if (!context) {
+      throw new Error("Failed to acquire OffscreenCanvas 2D context");
+    }
+
+    context.drawImage(bitmap, 0, 0, size, size);
+    return context.getImageData(0, 0, size, size);
+  } finally {
+    bitmap.close();
+  }
 }
 
 let cachedIconsPromise;
 
-async function decodeIcons() {
+async function loadIcons() {
   if (!cachedIconsPromise) {
     cachedIconsPromise = Promise.all(
-      Object.entries(ICON_BASE64).map(async ([size, base64]) => {
+      Object.entries(ICON_PATHS).map(async ([size, path]) => {
         const numericSize = Number(size);
-        const imageData = await base64ToImageData(numericSize, base64);
+        const imageData = await loadIconImageData(numericSize, path);
         return [numericSize, imageData];
       })
     ).then((entries) => Object.fromEntries(entries));
   }
+
   return cachedIconsPromise;
 }
 
 async function applyActionIcons() {
   try {
-    const imageDataMap = await decodeIcons();
+    const imageDataMap = await loadIcons();
     await chrome.action.setIcon({ imageData: imageDataMap });
   } catch (error) {
     console.error("Failed to apply action icons", error);
