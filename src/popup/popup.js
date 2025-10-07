@@ -125,8 +125,9 @@ async function initCurrentTabPanel() {
 
   const statusElement = document.querySelector("[data-current-status]");
   const applyDefaultsButton = document.querySelector("[data-apply-defaults]");
-  const rangeSelect = document.querySelector("[data-current-range]");
-  const typeInputs = Array.from(document.querySelectorAll("[data-current-type]"));
+  const rangeSelect = form.querySelector("[data-current-range]");
+  const typeInputs = Array.from(form.querySelectorAll("[data-current-type]"));
+  const reloadToggle = form.querySelector("[data-current-reload]");
   const titleElement = document.querySelector("[data-current-title]");
   const urlElement = document.querySelector("[data-current-url]");
   const faviconElement = document.querySelector("[data-current-favicon]");
@@ -135,6 +136,7 @@ async function initCurrentTabPanel() {
   let currentTab = null;
   let generalSettings = normalizeGeneralSettings(DEFAULT_GENERAL_SETTINGS);
   let generalDefaults = derivePanelSelectionFromGeneral(generalSettings);
+  generalDefaults = normalizePanelSelection(generalDefaults);
   let panelSelection = normalizePanelSelection(undefined, generalDefaults);
   const storage = new StorageService();
   await storage.ready;
@@ -161,11 +163,19 @@ async function initCurrentTabPanel() {
     typeInputs.forEach((input) => {
       input.checked = Boolean(settings.dataTypes[input.value]);
     });
+
+    if (reloadToggle) {
+      reloadToggle.checked = Boolean(settings.reloadAfterCleanup);
+    }
   }
   function readSelection() {
     const nextSelection = {
       timeRange: rangeSelect?.value || panelSelection.timeRange,
       dataTypes: { ...panelSelection.dataTypes },
+      reloadAfterCleanup:
+        reloadToggle instanceof HTMLInputElement
+          ? reloadToggle.checked
+          : panelSelection.reloadAfterCleanup,
     };
 
     typeInputs.forEach((input) => {
@@ -308,8 +318,33 @@ async function initCurrentTabPanel() {
       }
 
       await Promise.all(tasks);
-      showStatus("清理完成！", "success");
       await persistSelection(selection);
+
+      const shouldReload =
+        selection.reloadAfterCleanup &&
+        hasChromeRuntime() &&
+        chrome.tabs?.reload &&
+        typeof currentTab?.id !== "undefined";
+
+      showStatus(
+        shouldReload ? "清理完成，正在刷新页面…" : "清理完成！",
+        "success"
+      );
+
+      if (shouldReload) {
+        try {
+          chrome.tabs.reload(currentTab.id, () => {
+            const error = chrome.runtime?.lastError;
+            if (error) {
+              console.error("[Tab Clean Master] 页面刷新失败", error);
+              showStatus("页面刷新失败，请手动刷新。", "warning");
+            }
+          });
+        } catch (error) {
+          console.error("[Tab Clean Master] 页面刷新异常", error);
+          showStatus("页面刷新失败，请手动刷新。", "warning");
+        }
+      }
     } catch (error) {
       console.error("[Tab Clean Master] 清理失败", error);
       showStatus("清理过程中出现问题，请稍后重试。", "error");
@@ -342,7 +377,9 @@ async function initCurrentTabPanel() {
     generalSettings = normalizeGeneralSettings(
       storedGeneral[STORAGE_KEYS.generalOptions]
     );
-    generalDefaults = derivePanelSelectionFromGeneral(generalSettings);
+    generalDefaults = normalizePanelSelection(
+      derivePanelSelectionFromGeneral(generalSettings)
+    );
   }
 
   panelSelection = normalizePanelSelection(
@@ -357,7 +394,9 @@ async function initCurrentTabPanel() {
 
   observeGeneralSettings((nextGeneral) => {
     generalSettings = nextGeneral;
-    generalDefaults = derivePanelSelectionFromGeneral(generalSettings);
+    generalDefaults = normalizePanelSelection(
+      derivePanelSelectionFromGeneral(generalSettings)
+    );
     panelSelection = normalizePanelSelection(panelSelection, generalDefaults);
     applySettings(panelSelection);
   });
