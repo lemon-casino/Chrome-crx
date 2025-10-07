@@ -101,6 +101,12 @@ async function persistSettings(settings) {
     await storage.set({ [STORAGE_KEYS.generalOptions]: settings });
     currentSettings = settings;
     showStatus("设置已保存");
+    window.dispatchEvent(
+      new CustomEvent("tab-clean-master:general-options-updated", {
+        detail: settings,
+      })
+    );
+
   } catch (error) {
     console.error("[Tab Clean Master] 保存设置失败", error);
     showStatus("保存设置时出现问题，请稍后重试", "error");

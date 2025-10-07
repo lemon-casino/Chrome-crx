@@ -1,5 +1,7 @@
 export const STORAGE_KEYS = {
   generalOptions: "generalOptions",
+  currentTabPreferences: "currentTabPreferences",
+  globalCleanupPreferences: "globalCleanupPreferences",
 };
 
 export const TIME_RANGE_OPTIONS = [
@@ -36,6 +38,10 @@ export const DEFAULT_GENERAL_SETTINGS = {
   },
 };
 
+export const DEFAULT_PANEL_SELECTION = {
+  timeRange: DEFAULT_GENERAL_SETTINGS.timeRange,
+  dataTypes: { ...DEFAULT_GENERAL_SETTINGS.dataTypes },
+};
 export const AUTOMATION_THRESHOLD = {
   min: 5,
   max: 50,
@@ -77,6 +83,38 @@ export function normalizeGeneralSettings(settings = {}) {
         normalized.automation.threshold = clamped;
       }
     }
+  }
+
+  return normalized;
+}
+
+export function derivePanelSelectionFromGeneral(settings = {}) {
+  const normalized = normalizeGeneralSettings(settings);
+  return {
+    timeRange: normalized.timeRange,
+    dataTypes: { ...normalized.dataTypes },
+  };
+}
+
+export function normalizePanelSelection(selection = {}, fallback = DEFAULT_PANEL_SELECTION) {
+  const normalized = {
+    timeRange: fallback.timeRange,
+    dataTypes: { ...fallback.dataTypes },
+  };
+
+  if (
+    typeof selection.timeRange === "string" &&
+    TIME_RANGE_OPTIONS.some((option) => option.id === selection.timeRange)
+  ) {
+    normalized.timeRange = selection.timeRange;
+  }
+
+  if (selection.dataTypes && typeof selection.dataTypes === "object") {
+    DATA_TYPE_OPTIONS.forEach(({ id }) => {
+      if (typeof selection.dataTypes[id] === "boolean") {
+        normalized.dataTypes[id] = selection.dataTypes[id];
+      }
+    });
   }
 
   return normalized;

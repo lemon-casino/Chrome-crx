@@ -131,13 +131,70 @@
           aria-labelledby="tab-global-btn"
           hidden
         >
-          <h2 class="panel__title">全部数据清理</h2>
+          <h2 class="panel__title">全部页面清理</h2>
           <p class="panel__description">
-            对整个浏览器的数据进行清理，支持批量操作和进度反馈。将在后续阶段提供完整体验。
+            快速对浏览器范围内的缓存、Cookie 等数据执行统一清理，适合在结束工作前进行一次彻底的整理。
           </p>
-          <div class="panel__placeholder" aria-hidden="true">
-            <span>功能开发中...</span>
-          </div>
+          <form class="global-clean" data-global-form>
+            <div class="global-clean__group">
+              <label class="global-clean__label" for="global-time-range">清理时间范围</label>
+              <select id="global-time-range" name="timeRange" data-global-range>
+                <option value="last15Minutes">最近 15 分钟</option>
+                <option value="lastHour">最近 1 小时</option>
+                <option value="last24Hours">最近 24 小时</option>
+                <option value="last7Days">最近 7 天</option>
+                <option value="last4Weeks">最近 4 周</option>
+                <option value="forever">全部时间</option>
+              </select>
+            </div>
+            <fieldset class="global-clean__group" aria-describedby="global-types-hint">
+              <legend class="global-clean__label">清理数据类型</legend>
+              <div class="global-clean__types">
+                <label class="global-clean__checkbox">
+                  <input type="checkbox" value="cache" data-global-type />
+                  <span>缓存数据</span>
+                </label>
+                <label class="global-clean__checkbox">
+                  <input type="checkbox" value="cookies" data-global-type />
+                  <span>Cookie</span>
+                </label>
+                <label class="global-clean__checkbox">
+                  <input type="checkbox" value="history" data-global-type />
+                  <span>历史记录</span>
+                </label>
+                <label class="global-clean__checkbox">
+                  <input type="checkbox" value="localStorage" data-global-type />
+                  <span>本地存储</span>
+                </label>
+                <label class="global-clean__checkbox">
+                  <input type="checkbox" value="downloads" data-global-type />
+                  <span>下载记录</span>
+                </label>
+                <label class="global-clean__checkbox">
+                  <input type="checkbox" value="passwords" data-global-type />
+                  <span>已保存的密码</span>
+                </label>
+              </div>
+              <p class="global-clean__hint" id="global-types-hint">
+                默认勾选项来自通用选项，可按需调整并记忆上次选择。
+              </p>
+              <div class="global-clean__toggle-group">
+                <button type="button" class="global-clean__toggle" data-global-select-all>
+                  全部勾选
+                </button>
+                <button type="button" class="global-clean__toggle" data-global-select-none>
+                  全部取消
+                </button>
+              </div>
+            </fieldset>
+            <div class="global-clean__actions">
+              <button type="submit" class="global-clean__submit">执行全局清理</button>
+              <button type="button" class="global-clean__secondary" data-global-apply-defaults>
+                恢复默认
+              </button>
+            </div>
+            <p class="global-clean__status" role="status" aria-live="polite" data-global-status></p>
+          </form>
         </article>
         <article
           class="panel"
@@ -148,15 +205,110 @@
         >
           <h2 class="panel__title">通用选项</h2>
           <p class="panel__description">
-            管理时间范围、自动清理和扩展行为等通用配置。该部分将在相关阶段完成。
+            直接在弹窗内修改默认的清理策略，所有更改将同步到设置页并在下次打开时保持生效。
           </p>
-          <div class="panel__placeholder" aria-hidden="true">
-            <span>功能开发中...</span>
-          </div>
+          <form class="settings-panel" data-settings-form>
+            <section class="settings-panel__section" aria-labelledby="popup-settings-time">
+              <div class="settings-panel__heading">
+                <h3 id="popup-settings-time">默认时间范围</h3>
+                <p>选择执行清理时默认使用的时间范围。</p>
+              </div>
+              <div class="settings-panel__chips">
+                <label class="settings-panel__chip">
+                  <input type="radio" name="timeRange" value="last15Minutes" />
+                  <span>15 分钟</span>
+                </label>
+                <label class="settings-panel__chip">
+                  <input type="radio" name="timeRange" value="lastHour" />
+                  <span>1 小时</span>
+                </label>
+                <label class="settings-panel__chip">
+                  <input type="radio" name="timeRange" value="last24Hours" />
+                  <span>24 小时</span>
+                </label>
+                <label class="settings-panel__chip">
+                  <input type="radio" name="timeRange" value="last7Days" />
+                  <span>7 天</span>
+                </label>
+                <label class="settings-panel__chip">
+                  <input type="radio" name="timeRange" value="last4Weeks" />
+                  <span>4 周</span>
+                </label>
+                <label class="settings-panel__chip">
+                  <input type="radio" name="timeRange" value="forever" />
+                  <span>全部时间</span>
+                </label>
+              </div>
+            </section>
+            <section class="settings-panel__section" aria-labelledby="popup-settings-types">
+              <div class="settings-panel__heading">
+                <h3 id="popup-settings-types">默认数据类型</h3>
+                <p>决定在各个页面中默认勾选的清理范围。</p>
+              </div>
+              <div class="settings-panel__types">
+                <label class="settings-panel__toggle">
+                  <input type="checkbox" value="cache" data-settings-type />
+                  <span>缓存数据</span>
+                </label>
+                <label class="settings-panel__toggle">
+                  <input type="checkbox" value="cookies" data-settings-type />
+                  <span>Cookie</span>
+                </label>
+                <label class="settings-panel__toggle">
+                  <input type="checkbox" value="history" data-settings-type />
+                  <span>历史记录</span>
+                </label>
+                <label class="settings-panel__toggle">
+                  <input type="checkbox" value="localStorage" data-settings-type />
+                  <span>本地存储</span>
+                </label>
+                <label class="settings-panel__toggle">
+                  <input type="checkbox" value="downloads" data-settings-type />
+                  <span>下载记录</span>
+                </label>
+                <label class="settings-panel__toggle">
+                  <input type="checkbox" value="passwords" data-settings-type />
+                  <span>已保存的密码</span>
+                </label>
+              </div>
+            </section>
+            <section class="settings-panel__section" aria-labelledby="popup-settings-automation">
+              <div class="settings-panel__heading">
+                <h3 id="popup-settings-automation">自动清理</h3>
+                <p>在标签页过多时提醒进行一次默认清理。</p>
+              </div>
+              <label class="settings-panel__switch">
+                <input type="checkbox" data-settings-automation="enabled" />
+                <span class="settings-panel__switch-control" aria-hidden="true"></span>
+                <span class="settings-panel__switch-label">启用自动清理提醒</span>
+              </label>
+              <div class="settings-panel__threshold">
+                <label for="popup-settings-threshold">标签页数量阈值</label>
+                <input
+                  id="popup-settings-threshold"
+                  type="number"
+                  inputmode="numeric"
+                  min="5"
+                  max="50"
+                  step="1"
+                  data-settings-automation="threshold"
+                />
+              </div>
+            </section>
+            <div class="settings-panel__actions">
+              <button type="button" class="settings-panel__link" data-open-options>
+                打开完整设置页
+              </button>
+              <button type="button" class="settings-panel__secondary" data-settings-reset>
+                恢复默认
+              </button>
+            </div>
+            <p class="settings-panel__status" role="status" aria-live="polite" data-settings-status></p>
+          </form>
         </article>
       </section>
       <footer class="popup__footer">
-        <small>版本 0.1.0 · 架构搭建阶段</small>
+        <small>版本 0.2.0 · 插件开发阶段</small>
       </footer>
     </main>
     <script type="module" src="popup.js"></script>
