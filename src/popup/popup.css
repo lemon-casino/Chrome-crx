@@ -582,7 +582,8 @@ body {
 
 .current-tab__types {
   display: grid;
-  gap: 6px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
 }
 
 .current-tab__checkbox {
@@ -1119,7 +1120,8 @@ body {
 
 .current-tab__types {
   display: grid;
-  gap: 6px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
 }
 
 .current-tab__checkbox {
