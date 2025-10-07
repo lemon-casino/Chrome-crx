@@ -139,7 +139,6 @@ body {
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
-
 .global-clean {
   display: grid;
   gap: 14px;
@@ -720,7 +719,6 @@ body {
   .current-tab__secondary {
     background: rgba(248, 250, 252, 0.85);
   }
-
   .global-clean select,
   .global-clean__checkbox,
   .global-clean__toggle,

@@ -92,7 +92,6 @@ function setupTabs() {
 
 // 在模块加载后立即初始化交互逻辑，确保弹窗展示时可用。
 setupTabs();
-
 function observeGeneralSettings(callback) {
   window.addEventListener("tab-clean-master:general-options-updated", (event) => {
     callback(normalizeGeneralSettings(event.detail ?? {}));
@@ -114,7 +113,6 @@ function observeGeneralSettings(callback) {
     });
   }
 }
-
 /**
  * 初始化“当前页面”面板，读取默认设置并绑定清理逻辑。
  */
@@ -163,7 +161,6 @@ async function initCurrentTabPanel() {
       input.checked = Boolean(settings.dataTypes[input.value]);
     });
   }
-
   function readSelection() {
     const nextSelection = {
       timeRange: rangeSelect?.value || panelSelection.timeRange,
@@ -260,12 +257,10 @@ async function initCurrentTabPanel() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-
     const selection = readSelection();
     const selectedTypes = Object.entries(selection.dataTypes)
       .filter(([, enabled]) => enabled)
       .map(([id]) => id);
-
     if (!selectedTypes.length) {
       showStatus("请至少选择一种需要清理的数据类型", "error");
       return;
@@ -280,7 +275,6 @@ async function initCurrentTabPanel() {
       showStatus("无法获取当前标签页地址。", "error");
       return;
     }
-
     const since = resolveSinceTimestamp(selection.timeRange);
     const { originScoped, globalScoped } = buildRemovalPayload(selectedTypes);
 
@@ -320,7 +314,6 @@ async function initCurrentTabPanel() {
       showStatus("清理过程中出现问题，请稍后重试。", "error");
     }
   }
-
   function handleFormChange() {
     const selection = readSelection();
     applySettings(selection);

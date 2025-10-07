@@ -42,7 +42,6 @@ export const DEFAULT_PANEL_SELECTION = {
   timeRange: DEFAULT_GENERAL_SETTINGS.timeRange,
   dataTypes: { ...DEFAULT_GENERAL_SETTINGS.dataTypes },
 };
-
 export const AUTOMATION_THRESHOLD = {
   min: 5,
   max: 50,

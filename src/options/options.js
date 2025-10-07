@@ -106,6 +106,7 @@ async function persistSettings(settings) {
         detail: settings,
       })
     );
+
   } catch (error) {
     console.error("[Tab Clean Master] 保存设置失败", error);
     showStatus("保存设置时出现问题，请稍后重试", "error");
