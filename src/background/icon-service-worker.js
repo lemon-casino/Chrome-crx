@@ -85,10 +85,7 @@ async function runAutomatedCleanup(trigger) {
     );
 
     const preference = generalSettings.automation.browserEvent;
-    if (
-      (trigger === "startup" && preference !== "startup") ||
-      (trigger === "shutdown" && preference !== "shutdown")
-    ) {
+    if (trigger !== "startup" || preference !== "startup") {
       return;
     }
 
@@ -115,11 +112,7 @@ async function runAutomatedCleanup(trigger) {
       });
     });
 
-    console.info(
-      `[Tab Clean Master] 已在${
-        trigger === "startup" ? "浏览器启动" : "浏览器关闭"
-      }时执行默认清理。`
-    );
+    console.info("[Tab Clean Master] 已在浏览器启动时执行默认清理。");
   } catch (error) {
     console.error(
       `[Tab Clean Master] 自动清理执行失败（${trigger}）`,
@@ -137,6 +130,3 @@ chrome.runtime.onStartup.addListener(() => {
   runAutomatedCleanup("startup");
 });
 
-chrome.runtime.onSuspend.addListener(() => {
-  runAutomatedCleanup("shutdown");
-});
