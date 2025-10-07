@@ -5,9 +5,17 @@ const ICON_BASE64 = {
   128: "iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAABgUlEQVR42u3dy3ECMQBEwYkAH8mBvAnOUUAOLhcfvT68BDR93JX2c7091G0OAQAHAYAAEAACQAAIAAEgAASAABAAAkAACAABIAAEgAAQAAJAAAgAASAABIAAEACf1uX+++cAiA1eAzHDtyHM6G0MM34bwQzfhjDDtyHM+G0EM34bwYzfRjDjtxHM+G0EM34bwYzfRjDjtxEAAIDxywgAAMD4ZQQzfhsBAAAAAIDxswgAAMD4ZQQAAAAAAAAAYPwmAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACHwPAAAAAAAAAAAQ+C8AAAAg8G8gAAAAAAAEbgiBwB1BAAAAgXsCAQAAAncFQ+C2cAi8FwCBF0Mg8GaQV8MA8G4gAF4OBcDbwQB4PRyAAxF88/l9PYB3YTjlzI4C8AoIp53VkQD+E8TpZ5MAIAAEgAAQAAJAAAgASAAAHAIADgIAASAABAAAkAACAABIAAEgAAQAAJAAAgAAaCDegKkUCoFg1+/xQAAAABJRU5ErkJggg=="
 };
 
+function base64ToBlob(base64) {
+  const binary = atob(base64);
+  const buffer = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i += 1) {
+    buffer[i] = binary.charCodeAt(i);
+  }
+  return new Blob([buffer], { type: "image/png" });
+}
+
 async function base64ToImageData(size, base64) {
-  const response = await fetch(`data:image/png;base64,${base64}`);
-  const blob = await response.blob();
+  const blob = base64ToBlob(base64);
   const bitmap = await createImageBitmap(blob);
   const canvas = new OffscreenCanvas(size, size);
   const ctx = canvas.getContext("2d");
