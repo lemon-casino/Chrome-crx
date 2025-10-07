@@ -53,11 +53,76 @@
         >
           <h2 class="panel__title">当前页面清理</h2>
           <p class="panel__description">
-            查看当前标签页的信息，并快速执行针对性的清理操作。后续阶段将补充清理选项和实时反馈。
+            查看当前标签页的信息，并快速执行针对性的清理操作。可以按需调整时间范围与数据类型。
           </p>
-          <div class="panel__placeholder" aria-hidden="true">
-            <span>功能开发中...</span>
-          </div>
+          <section class="current-tab" aria-live="polite">
+            <header class="current-tab__summary">
+              <img
+                src=""
+                alt=""
+                class="current-tab__favicon"
+                width="32"
+                height="32"
+                data-current-favicon
+              />
+              <div class="current-tab__details">
+                <h3 class="current-tab__title" data-current-title>正在读取标签信息...</h3>
+                <p class="current-tab__url" data-current-url></p>
+              </div>
+            </header>
+            <form class="current-tab__form" data-current-form>
+              <div class="current-tab__group">
+                <label class="current-tab__label" for="current-time-range">清理时间范围</label>
+                <select id="current-time-range" name="timeRange" data-current-range>
+                  <option value="last15Minutes">最近 15 分钟</option>
+                  <option value="lastHour">最近 1 小时</option>
+                  <option value="last24Hours">最近 24 小时</option>
+                  <option value="last7Days">最近 7 天</option>
+                  <option value="last4Weeks">最近 4 周</option>
+                  <option value="forever">全部时间</option>
+                </select>
+              </div>
+              <fieldset class="current-tab__group" aria-describedby="current-types-hint">
+                <legend class="current-tab__label">需要清理的数据类型</legend>
+                <div class="current-tab__types" id="current-types">
+                  <label class="current-tab__checkbox">
+                    <input type="checkbox" value="cache" data-current-type />
+                    <span>缓存数据</span>
+                  </label>
+                  <label class="current-tab__checkbox">
+                    <input type="checkbox" value="cookies" data-current-type />
+                    <span>Cookie</span>
+                  </label>
+                  <label class="current-tab__checkbox">
+                    <input type="checkbox" value="history" data-current-type />
+                    <span>历史记录</span>
+                  </label>
+                  <label class="current-tab__checkbox">
+                    <input type="checkbox" value="localStorage" data-current-type />
+                    <span>本地存储</span>
+                  </label>
+                  <label class="current-tab__checkbox">
+                    <input type="checkbox" value="downloads" data-current-type />
+                    <span>下载记录</span>
+                  </label>
+                  <label class="current-tab__checkbox">
+                    <input type="checkbox" value="passwords" data-current-type />
+                    <span>已保存的密码</span>
+                  </label>
+                </div>
+                <p class="current-tab__hint" id="current-types-hint">
+                  默认勾选项可在通用选项中配置。
+                </p>
+              </fieldset>
+              <div class="current-tab__actions">
+                <button type="submit" class="current-tab__submit">立即清理</button>
+                <button type="button" class="current-tab__secondary" data-apply-defaults>
+                  恢复默认
+                </button>
+              </div>
+              <p class="current-tab__status" role="status" aria-live="polite" data-current-status></p>
+            </form>
+          </section>
         </article>
         <article
           class="panel"
