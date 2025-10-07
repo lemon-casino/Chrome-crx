@@ -172,7 +172,7 @@ body {
 .global-clean__types {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
+  gap: 6px;
 }
 
 .global-clean__checkbox {
@@ -350,7 +350,7 @@ body {
 .settings-panel__types {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
+  gap: 6px;
 }
 
 .settings-panel__toggle {
