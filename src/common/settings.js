@@ -21,11 +21,7 @@ export const DATA_TYPE_OPTIONS = [
   { id: "downloads", label: "下载记录", key: "downloads", supportsOrigins: false },
   { id: "passwords", label: "已保存的密码", key: "passwords", supportsOrigins: false },
 ];
-export const BROWSER_EVENT_AUTOMATION = [
-  "off",
-  "startup",
-  "shutdown",
-];
+export const BROWSER_EVENT_AUTOMATION = ["off", "startup"];
 
 export const DEFAULT_GENERAL_SETTINGS = {
   timeRange: "lastHour",
@@ -47,6 +43,7 @@ export const DEFAULT_GENERAL_SETTINGS = {
 export const DEFAULT_PANEL_SELECTION = {
   timeRange: DEFAULT_GENERAL_SETTINGS.timeRange,
   dataTypes: { ...DEFAULT_GENERAL_SETTINGS.dataTypes },
+  reloadAfterCleanup: false,
 };
 export const AUTOMATION_THRESHOLD = {
   min: 5,
@@ -105,13 +102,33 @@ export function derivePanelSelectionFromGeneral(settings = {}) {
   return {
     timeRange: normalized.timeRange,
     dataTypes: { ...normalized.dataTypes },
+    reloadAfterCleanup: DEFAULT_PANEL_SELECTION.reloadAfterCleanup,
   };
 }
 
 export function normalizePanelSelection(selection = {}, fallback = DEFAULT_PANEL_SELECTION) {
+  const baseFallback =
+    fallback && typeof fallback === "object"
+      ? {
+          timeRange:
+            typeof fallback.timeRange === "string"
+              ? fallback.timeRange
+              : DEFAULT_PANEL_SELECTION.timeRange,
+          dataTypes:
+            fallback.dataTypes && typeof fallback.dataTypes === "object"
+              ? { ...DEFAULT_PANEL_SELECTION.dataTypes, ...fallback.dataTypes }
+              : { ...DEFAULT_PANEL_SELECTION.dataTypes },
+          reloadAfterCleanup:
+            typeof fallback.reloadAfterCleanup === "boolean"
+              ? fallback.reloadAfterCleanup
+              : DEFAULT_PANEL_SELECTION.reloadAfterCleanup,
+        }
+      : { ...DEFAULT_PANEL_SELECTION };
+
   const normalized = {
-    timeRange: fallback.timeRange,
-    dataTypes: { ...fallback.dataTypes },
+    timeRange: baseFallback.timeRange,
+    dataTypes: { ...baseFallback.dataTypes },
+    reloadAfterCleanup: baseFallback.reloadAfterCleanup,
   };
 
   if (
@@ -127,6 +144,10 @@ export function normalizePanelSelection(selection = {}, fallback = DEFAULT_PANEL
         normalized.dataTypes[id] = selection.dataTypes[id];
       }
     });
+  }
+
+  if (typeof selection.reloadAfterCleanup === "boolean") {
+    normalized.reloadAfterCleanup = selection.reloadAfterCleanup;
   }
 
   return normalized;

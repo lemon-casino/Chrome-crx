@@ -85,13 +85,17 @@
         <section class="options__section" aria-labelledby="section-automation">
           <div class="section__heading">
             <h2 id="section-automation">自动清理策略</h2>
-            <p>在达到指定条件时自动执行默认的清理策略。</p>
+            <p>
+              在标签页过多时执行一次默认清理。启用后，当所有标签页的数量
+              超过设定的阈值时会自动执行清理，并会在开启后首次打开新标签页
+              时检查标签页数量。
+            </p>
           </div>
           <div class="automation">
             <label class="switch">
               <input type="checkbox" data-automation="enabled" />
               <span class="switch__control" aria-hidden="true"></span>
-              <span class="switch__label">启用自动清理</span>
+              <span class="switch__label">启动自动清理功能</span>
             </label>
             <div class="automation__threshold">
               <label for="automation-threshold">标签页数量阈值</label>
@@ -105,7 +109,7 @@
                 data-automation="threshold"
               />
               <p class="automation__hint">
-                当打开的标签页数量超过该值时，将提示执行一次默认清理。
+                当打开的标签页数量超过该值时，将自动执行一次默认清理。
               </p>
             </div>
             <fieldset
@@ -117,7 +121,7 @@
                 浏览器事件自动清理
               </legend>
               <p class="automation__hint">
-                在打开或关闭浏览器时自动执行一次默认清理。默认保持关闭。
+                在打开浏览器时自动执行一次默认清理。默认保持关闭。
               </p>
               <div class="automation__event-options">
                 <label class="chip chip--dense">
@@ -126,11 +130,7 @@
                 </label>
                 <label class="chip chip--dense">
                   <input type="radio" name="browserEvent" value="startup" />
-                  <span>打开浏览器时</span>
-                </label>
-                <label class="chip chip--dense">
-                  <input type="radio" name="browserEvent" value="shutdown" />
-                  <span>关闭浏览器前</span>
+                  <span>打开</span>
                 </label>
               </div>
             </fieldset>
@@ -142,7 +142,7 @@
         </div>
       </form>
       <footer class="options__footer">
-        <small>版本 0.2.0 · 插件开发阶段</small>
+        <small>版本 0.2.0 · 插件开发阶段 · Lemon</small>
       </footer>
     </main>
     <script type="module" src="options.js"></script>
