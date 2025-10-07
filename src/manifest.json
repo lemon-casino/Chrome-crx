@@ -8,7 +8,8 @@
     "default_title": "Tab Clean Master"
   },
   "background": {
-    "service_worker": "background/icon-service-worker.js"
+    "service_worker": "background/icon-service-worker.js",
+    "type": "module"
   },
   "options_page": "options/options.html",
   "permissions": [
