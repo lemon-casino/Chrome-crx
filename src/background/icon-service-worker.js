@@ -5,31 +5,44 @@ const ICON_BASE64 = {
   128: "iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAABgUlEQVR42u3dy3ECMQBEwYkAH8mBvAnOUUAOLhcfvT68BDR93JX2c7091G0OAQAHAYAAEAACQAAIAAEgAASAABAAAkAACAABIAAEgAAQAAJAAAgAASAABIAAEACf1uX+++cAiA1eAzHDtyHM6G0MM34bwQzfhjDDtyHM+G0EM34bwYzfRjDjtxHM+G0EM34bwYzfRjDjtxEAAIDxywgAAMD4ZQQzfhsBAAAAAIDxswgAAMD4ZQQAAAAAAAAAYPwmAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACHwPAAAAAAAAAAAQ+C8AAAAg8G8gAAAAAAAEbgiBwB1BAAAAgXsCAQAAAncFQ+C2cAi8FwCBF0Mg8GaQV8MA8G4gAF4OBcDbwQB4PRyAAxF88/l9PYB3YTjlzI4C8AoIp53VkQD+E8TpZ5MAIAAEgAAQAAJAAAgASAAAHAIADgIAASAABAAAkAACAABIAAEgAAQAAJAAAgAAaCDegKkUCoFg1+/xQAAAABJRU5ErkJggg=="
 };
 
-function base64ToBlob(base64) {
+function base64ToUint8Array(base64) {
   const binary = atob(base64);
   const buffer = new Uint8Array(binary.length);
   for (let i = 0; i < binary.length; i += 1) {
     buffer[i] = binary.charCodeAt(i);
   }
-  return new Blob([buffer], { type: "image/png" });
+  return buffer;
 }
 
 async function base64ToImageData(size, base64) {
-  const blob = base64ToBlob(base64);
+  const blob = new Blob([base64ToUint8Array(base64)], { type: "image/png" });
   const bitmap = await createImageBitmap(blob);
   const canvas = new OffscreenCanvas(size, size);
   const ctx = canvas.getContext("2d");
   ctx.drawImage(bitmap, 0, 0, size, size);
-  return ctx.getImageData(0, 0, size, size);
+  const imageData = ctx.getImageData(0, 0, size, size);
+  bitmap.close();
+  return imageData;
+}
+
+let cachedIconsPromise;
+
+async function decodeIcons() {
+  if (!cachedIconsPromise) {
+    cachedIconsPromise = Promise.all(
+      Object.entries(ICON_BASE64).map(async ([size, base64]) => {
+        const numericSize = Number(size);
+        const imageData = await base64ToImageData(numericSize, base64);
+        return [numericSize, imageData];
+      })
+    ).then((entries) => Object.fromEntries(entries));
+  }
+  return cachedIconsPromise;
 }
 
 async function applyActionIcons() {
   try {
-    const imageDataMap = {};
-    for (const [size, base64] of Object.entries(ICON_BASE64)) {
-      const numericSize = Number(size);
-      imageDataMap[numericSize] = await base64ToImageData(numericSize, base64);
-    }
+    const imageDataMap = await decodeIcons();
     await chrome.action.setIcon({ imageData: imageDataMap });
   } catch (error) {
     console.error("Failed to apply action icons", error);
