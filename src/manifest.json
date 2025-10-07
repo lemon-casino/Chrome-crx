@@ -5,7 +5,17 @@
   "version": "0.1.0",
   "action": {
     "default_popup": "popup/popup.html",
-    "default_title": "Tab Clean Master"
+    "default_title": "Tab Clean Master",
+    "default_icon": {
+      "16": "assets/icons/Chrome.png",
+      "32": "assets/icons/Chrome.png",
+      "48": "assets/icons/Chrome.png"
+    }
+  },
+  "icons": {
+    "16": "assets/icons/Chrome.png",
+    "32": "assets/icons/Chrome.png",
+    "48": "assets/icons/Chrome.png"
   },
   "background": {
     "service_worker": "background/icon-service-worker.js",
