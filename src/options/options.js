@@ -9,6 +9,7 @@ import {
   DEFAULT_GENERAL_SETTINGS,
   normalizeGeneralSettings,
   AUTOMATION_THRESHOLD,
+  BROWSER_EVENT_AUTOMATION,
 } from "../common/settings.js";
 
 const STATUS_DURATION = 3200;
@@ -61,7 +62,9 @@ function readSettingsFromForm() {
     threshold: automationThresholdInput
       ? Number.parseInt(automationThresholdInput.value, 10)
       : currentSettings.automation.threshold,
-    browserEvent: currentSettings.automation.browserEvent,
+    browserEvent:
+      currentSettings.automation.browserEvent ||
+      BROWSER_EVENT_AUTOMATION[0],
   };
 
   const browserEventInput = formData.get("browserEvent");

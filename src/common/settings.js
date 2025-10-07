@@ -40,6 +40,7 @@ export const DEFAULT_GENERAL_SETTINGS = {
   automation: {
     enabled: false,
     threshold: 20,
+    browserEvent: BROWSER_EVENT_AUTOMATION[0],
   },
 };
 
